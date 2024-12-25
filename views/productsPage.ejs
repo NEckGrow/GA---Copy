@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <title><%= categoryName %> </title>
+
+    <style>
+        .card-container {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/navbar.ejs') %>
+
+    <!-- Category Title -->
+    <div class="container text-center">
+        <h2>Products in the <%= categoryName %> Category</h2>
+    </div>
+
+    <!-- Product Cards -->
+    <div class="container card-container">
+        <div class="row">
+            <% if (products.length > 0) { %>
+                <% products.forEach(product => { %>
+                    <div class="col-md-2 mb-2">
+                        <div class="card h-100">
+                            <img src="/images/<%= product.productImage %>" class="card-img-top" alt="<%= product.productName %>">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= product.productName %></h5>
+                                <p class="card-text"><%= product.productDescription %></p>
+                                <p class="card-text font-weight-bold">Price: $<%= product.productPrice %></p>
+                                <% if (user) {%>
+                                    <a href="/product/<%= product.productId %>" class="btn btn-primary">View Product</a>
+                               
+                                <% } else { %>
+                                    <a href="/login %>" class="btn btn-primary">View Product</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="col-12 text-center">
+                    <p>No products found.</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('partials/footer.ejs') %>
+
+    <!-- Bootstrap JS and Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

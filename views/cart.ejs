@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        /* Add relevant styling here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .cart-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .left-section, .right-section {
+            width: 48%;
+        }
+        .promotions, .shipping-fee, .order-summary {
+            background-color: #f7f7f7;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+        .all-items, .add-on-items {
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #fff;
+            margin-bottom: 10px;
+        }
+        .checkout-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        .payment-methods img {
+            width: 50px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <%- include('partials/navbar.ejs') %>
+    <div class="cart-container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <!-- Shipping Fee -->
+            <div class="shipping-fee">
+                <p>Buy S$40.00 more to enjoy FREE STANDARD SHIPPING!</p>
+                <button>Add</button>
+            </div>
+            <!-- Promotions -->
+            <div class="promotions">
+                <p>Buy S$51.00 more to earn a 20% OFF coupon!</p>
+                <button>Add</button>
+            </div>
+            <!-- All Items -->
+            <div class="all-items">
+                <h4>ALL ITEMS (<%= cart_items.length %>)</h4>
+                <% cart_items.forEach(item => { %>
+                <div style="border-bottom: 1px solid #ddd; margin-bottom: 10px; padding-bottom: 10px; position: relative;">
+                    <p>
+                        <strong><%= item.productName %></strong> <br>
+                        Price: S$<%= item.productPrice %> <br>
+                        Quantity: <%= item.cartProductQuantity %> <br>
+                        Subtotal: S$<%= (item.productPrice * item.cartProductQuantity).toFixed(2) %>
+                    </p>
+                    <div>
+                        <form action="/cart/update" method="POST">
+                            <label for="quantity<%= item.productId %>">Qty:</label>
+                            <select id="quantity<%= item.productId %>" name="quantity" onchange="this.form.submit()">
+                                <% for (let i = 1; i <= 10; i++) { %>
+                                    <option value="<%= i %>" <%= i === item.cartProductQuantity ? 'selected' : '' %>><%= i %></option>
+                                <% } %>
+                            </select>
+                            
+                            
+                           
+                            <input type="hidden" name="productId" value="<%= item.productId %>">
+                        </form>
+                    </div>
+                    
+                    <!-- Delete Button -->
+                    <form action="/cart/delete" method="POST" style="position: absolute; bottom: 10px; right: 10px;">
+                        <input type="hidden" name="productId" value="<%= item.productId %>">
+                        <button type="submit" class= " btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+                <% }); %>
+            </div>
+            
+            <!-- Add-on Items -->
+            <div class="add-on-items">
+                <h4>Add-on Items</h4>
+                <p>Buy 1 more to enjoy an Add-on Item!</p>
+                <button><a href="/categories" style="text-decoration: none; color: black;"> Add</a></button>
+            </div>
+        </div>
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="order-summary">
+                <h4>Order Summary</h4>
+                <p>Estimated Price: S$<%= total_payment %></p>
+                <button class="checkout-btn">Checkout Now</button>
+            </div>
+            <h4>We Accept</h4>
+            <div class="payment-icons">
+                <a href="#" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" style="width: 80px;"></a>
+                <a href="#" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard" style="width: 80px;"></a>
+                <a href="#" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg" alt="Amex" style="width: 80px;"></a>
+                <a href="#" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" style="width: 80px;"></a>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>

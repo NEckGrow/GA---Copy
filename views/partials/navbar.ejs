@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 24px;
+            
+        }
+
+        .profile {
+            border-radius: 100%;
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+       
+        .nav-item {
+            border: black, solid, 1px;
+          
+        }
+
+        
+       
+
+        .navbar-links .navbar-nav {
+            width: 100%; 
+        }
+
+        .navbar-links .nav-item {
+            flex: 1; /* Distribute items evenly */
+            text-align: center; /* Center text */
+        }
+
+        .navbar-links .nav-link {
+            font-weight: bold;
+            
+            padding: 10px;
+        }
+
+        .navbar-links .nav-link:last-child {
+            border-right: none; 
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-top">
+        <div class="container-fluid">
+            <!-- Brand -->
+            <a class="navbar-brand mx-auto" href="#">SHOPSMART</a>
+
+        
+
+            <!-- Login Button -->
+            <% if (user && user.userImage && user.username && user.userId ) { %>
+            <li>
+                
+                    <img src="/images/<%= user.userImage %>" alt="Profile Image" class="profile">
+                    <a class="nav-link active" aria-current="page" href="/account/<%= user.userId %>"><%= user.username %></a>
+                <% } else { %>
+                    <button class="btn btn-outline-dark ms-2"><a class="nav-link" href="/login">Login</a></button>
+               
+            </li>
+            <% } %>
+            
+        </div>
+    </nav>
+
+    <!-- Bottom Navbar with Links -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-links">
+        <div class="container-fluid">
+            <ul class="navbar-nav d-flex justify-content-between">
+                <% if (user && user.userRole === 'admin') { %>
+                <li class="nav-item">
+                   
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                
+                </li>
+                <% } %>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categories">Category</a>
+                </li>
+                <li class="nav-item">
+                    <% if (user && user.userId) { %>
+                        <a class="nav-link" href="/cart/<%= user.userId %>">Cart</a>
+                    <% } else { %>
+                        <a class="nav-link" href="/login">Cart</a>
+                    <% } %>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/social">Social Media</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Bootstrap Icons (for the search icon) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap JavaScript and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

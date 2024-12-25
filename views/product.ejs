@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= product.productName %> - Product Page</title>
+  <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your CSS -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .product-container {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .product-container img {
+      width: 300px;
+      height: auto;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+    .product-container h3 {
+      margin: 10px 0;
+    }
+    .product-container p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: gray;
+    }
+    .product-container h2 {
+      margin: 10px 0;
+      color: green;
+    }
+    .product-container button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .product-container button:hover {
+      background-color: gray;
+
+    }
+
+    .reviews-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .reviews-btn :hover {
+      background-color: gray;
+
+    }
+
+    .right-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Aligns all elements to the right */
+    margin-right: 50px;
+    margin-top: 30px;
+  }
+  .reviews-btn a {
+    text-decoration: none;
+    color: white;
+  }
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <%- include('partials/navbar.ejs') %>
+
+  <!-- Product Display Section -->
+  <div class="product-container">
+    <!-- Display Product Image -->
+    <div>
+      <img src="/images/<%= product.productImage %>" alt="<%= product.productName %>">
+    </div>
+    <!-- Display Product Details -->
+    <h3><%= product.productName %></h3>
+    <p><%= product.productDescription %></p>
+    <h2>S$<%= product.productPrice %></h2>
+    <h3>Available Quantity: <%= product.productStock %></h2>
+
+    
+    <form action="/cart/add" method="POST">
+      <input type="hidden" name="productId" value="<%= product.productId %>">
+      <label for="cartProductQuantity" style="margin-right: 10px;">Quantity:</label>
+      <input type="number" id="cartProductQuantity" name="cartProductQuantity" min="1" value="1" style="width: 60px; text-align: center; margin-bottom: 20px;"required>
+      <br>
+      <button type="submit" style="margin-top: 10px;">Add to Cart</button>
+  </form>
+  
+  </div>
+
+  <div class="right-section">
+    <button class="reviews-btn"><a href="/reviews/<%= product.productId %>">See Reviews</a></button>
+  </div>
+
+  <%- include('partials/footer.ejs') %>
+</body>
+</html>

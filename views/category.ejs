@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Home</title>
+
+    <style>
+       
+
+        
+        .text {
+            text-align: center;
+        }
+
+        .card {
+            height: 200px !important;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 2px black;
+            background-position: center;
+           
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            text-align: center;
+            margin-top: 12.5%;
+            color: white;
+           
+        }
+
+        .d-block {
+            text-decoration: none;
+        }
+
+
+       
+    </style>
+</head>
+<body>
+    <%- include('partials/navbar.ejs') %>
+
+    <div class="container">
+        <div class="text">
+            <h2>Categories</h2>
+            <p>choose from the below categories to start shopping!</p>
+        </div>
+
+        <div class="row">
+            <!-- Loop through categories and create clickable cards -->
+            <% categories.forEach(category => { %>
+                <div class="col-md-6 mb-4">
+                    <a href="/product/category/<%= category.categoryId%>" class="d-block">
+                        <div 
+                            class="card" 
+                            style="background-image: url('/images/<%= category.categoryImage %>');">
+                            <h3 class="card-title"><%= category.categoryName %></h3>
+                        </div>
+                    </a>
+                </div>
+            <% }); %>
+        </div>
+
+
+
+        
+        
+        
+    </div>
+
+   
+
+      
+    <%- include('partials/footer.ejs') %>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-ZvpUoO/+PpXQkZJt9AF6pSM/yIi+3lOsYO1kCvCde/eJ5N+8VsyT3CZ9z4v/s8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
